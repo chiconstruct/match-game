@@ -1,0 +1,61 @@
+/* FONT */
+@import url('https://fonts.googleapis.com/css?family=Work+Sans:400,700,900');
+
+/* GENERAL */
+html {
+  font-size: 14px;
+}
+
+body {
+  background-color: $base-bg-color;
+  font-family: $base-font;
+}
+
+main {
+  padding-top: 5.25rem;
+}
+
+/* INSTRUCTION */
+#instruction {
+  h4, h1 {
+    font-weight: 700;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    padding-bottom: 2rem;
+  }
+
+  h4 {
+    font-weight: 1rem;
+    padding-bottom: 0.5rem;
+  }
+
+  p {
+    padding-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+} /* end instruction */
+
+
+/* GAME */
+#game {
+  .row {
+
+    .card {
+      @include set-flex-container;
+      font-weight: 900;
+      font-size: 7rem;
+      color: white;
+      background-color: black;
+      border: 5px solid white;
+      border-radius: 10px;
+      height: 12.5rem;
+      cursor: pointer;
+
+      .number-container {
+      }
+    }
+  }
+
+}
