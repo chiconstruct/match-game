@@ -1,3 +1,8 @@
+$(document).ready(function() {
+  console.log("ready");
+  MatchGame.renderCards(MatchGame.generateCardValues(), $('#game'));
+});
+
 var MatchGame = {};
 
 /*
@@ -34,7 +39,41 @@ MatchGame.generateCardValues = function () {
 */
 
 MatchGame.renderCards = function(cardValues, $game) {
+  //Card colors
+  var colors = [
+    'hsl(25, 85%, 65%)',
+    'hsl(55, 85%, 65%)',
+    'hsl(90, 85%, 65%)',
+    'hsl(160, 85%, 65%)',
+    'hsl(220, 85%, 65%)',
+    'hsl(265, 85%, 65%)',
+    'hsl(310, 85%, 65%)',
+    'hsl(360, 85%, 65%)'
+  ];
+  //empty game object
+  $game.empty();
+  $game.data('flippedCards', []);
 
+  //render cards
+  for (index in cardValues) {
+    var value = cardValues[index]
+    var color = colors[value - 1];
+    var data = {
+      value: value,
+      color: color,
+      isFlipped: false
+    };
+    //Init card object
+    $card = $('<div class="col-xs-3 card"></div>');
+    $card.data(data);
+
+    console.log($card);
+    $game.append($card);
+  }
+
+  $('.card').on('click', function() {
+    MatchGame.flipCard($(this), $game);
+  });
 };
 
 /*
@@ -43,5 +82,51 @@ MatchGame.renderCards = function(cardValues, $game) {
  */
 
 MatchGame.flipCard = function($card, $game) {
+  //Check if the card is already flipped
+  if ($card.data('isFlipped')) {
+    //Here means it's flipped, returns
+    return
+  }
 
+  //Here means card's not flipped, flip it
+  $card.css("background-color", $card.data('color'))
+      .text($card.data('value'))
+      .data('isFlipped', true);
+
+  var flippedCards = $game.data('flippedCards');
+  flippedCards.push($card);
+
+  if (flippedCards.length == 2) {
+    //get card
+    var firstCard = flippedCards[0];
+    var secondCard = flippedCards[1];
+
+    //get card value
+    var firstCardValue = firstCard.data('value');
+    var secondCardValue = secondCard.data('value');
+
+    if (firstCardValue === secondCardValue) {
+      // Matched
+      for (index = 0; index < flippedCards.length; index++ ) {
+        flippedCards[index].css({
+          "background-color": 'rgb(153, 153, 153)',
+          "color": 'rgb(204, 204, 204)',
+          "isFlipped": true
+        });
+      }
+    } else {
+      //Not Matched
+      console.log("not Matched");
+      setTimeout(function(){
+        for (index = 0; index < flippedCards.length; index++) {
+          flippedCards[index].css("background-color", 'rgb(32, 64, 86)')
+                            .text('')
+                            .data('isFlipped', false);
+        }
+      }, 350);
+    }
+
+    //Reset flippedCards
+    $game.data('flippedCards', []);
+  }
 };

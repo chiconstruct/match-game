@@ -40,22 +40,18 @@ main {
 
 /* GAME */
 #game {
-  .row {
+  .card {
+    @include set-flex-container;
+    font-weight: 900;
+    font-size: 7rem;
+    color: white;
+    background-color: rgb(32, 64, 86);
+    border: 5px solid white;
+    border-radius: 10px;
+    height: 12.5rem;
+    cursor: pointer;
 
-    .card {
-      @include set-flex-container;
-      font-weight: 900;
-      font-size: 7rem;
-      color: white;
-      background-color: black;
-      border: 5px solid white;
-      border-radius: 10px;
-      height: 12.5rem;
-      cursor: pointer;
-
-      .number-container {
-      }
+    .number-container {
     }
   }
-
 }
